@@ -1,10 +1,15 @@
+import os
+from dotenv import load_dotenv
 from solana.rpc.api import Client
 from solders.pubkey import Pubkey
 from construct import *
 
+# Load environment variables from .env file
+load_dotenv()
+
 # Metaplex Metadata Program ID (fixed)
-METADATA_PROGRAM_ID = Pubkey.from_string("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s")
-solana_client = Client("https://api.mainnet-beta.solana.com")
+METADATA_PROGRAM_ID = Pubkey.from_string(os.getenv("METADATA_PROGRAM_ID"))
+solana_client = Client(os.getenv("SOLANA_RPC"))
 
 MetadataLayout = Struct(
     "key" / Int8ul,
@@ -49,3 +54,4 @@ def fetch_metadata(mint_address: str):
         "uri": safe_decode(data.uri),
         "seller_fee_basis_points": data.seller_fee_basis_points,
     }
+
