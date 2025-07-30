@@ -7,7 +7,7 @@ load_dotenv()
 
 mongo_client = MongoClient(os.getenv("MONGO_URI"))
 
-db = mongo_client[os.getenv("solana_python")]
+db = mongo_client[os.getenv("MONGO_DBNAME")]
 collection = db["token"]
 
 def insert_token(token):
